@@ -17,8 +17,8 @@ If ($AuthHeader) {
 # Just some Informational Output for Debugging, remove when not needed
 Write-Host "Calling user is authorized with the following scopes:" $jwt.scp 
 Write-Host "Calling user is authorized with the following roles:" $jwt.roles 
-Write-Host ($jwt.scp -notmatch "Phone.Write")
-Write-Host ($jwt.roles -notcontains "Phone.Write.All")
+#Write-Host ($jwt.scp -notmatch "Phone.Write")
+#Write-Host ($jwt.roles -notcontains "Phone.Write.All")
 
 # Check for user principal name parameter
 If ($Request.Params.userUpn) {
@@ -50,7 +50,7 @@ If (($jwt.scp -notmatch "user_impersonation") -and ($jwt.roles -notcontains "app
         # Authenticate with MSI and get Token
         $tokenResponse = Invoke-RestMethod -Method Get -Headers @{"Secret"="$msiSecret"} -Uri $tokenAuthUri
         # Convert Access Token to Secure String
-        $secureAccessToken = ConvertTo-SecureString ($tokenResponse.access_token) -AsPlainText -Force
+        #$secureAccessToken = ConvertTo-SecureString ($tokenResponse.access_token) -AsPlainText -Force
         Write-Host "Successfully retrieved Access Token for Microsoft Graph using MSI."
 
         # Connect to Graph with MSI Token
